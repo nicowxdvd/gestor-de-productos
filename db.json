@@ -1,0 +1,7 @@
+{
+  "products": [
+    { "id": 1, "name": "Cama", "price": 150000, "stock": 5, "category": "Hogar" },
+    { "id": 2, "name": "Silla", "price": 10000, "stock": 15, "category": "Oficina" },
+    { "id": 3, "name": "Mesa", "price": 50000, "stock": 6, "category": "Hogar" }
+  ]
+}
