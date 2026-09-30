@@ -17,6 +17,8 @@ export const MyCRUD = () => {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [actionError, setActionError]       = useState<string | null>(null)
 
+
+
   function openCreateModal(){
     setEditingProduct(null)
     setModalOpen(true)
@@ -64,6 +66,8 @@ export const MyCRUD = () => {
       onError: () => setActionError('No se pudo eliminar el producto. Intentá de nuevo.'),
     })
   }
+
+  
 
   return (
     <main className="min-h-screen bg-slate-950 p-8 text-slate-100">
