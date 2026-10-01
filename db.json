@@ -2,6 +2,28 @@
   "products": [
     { "id": 1, "name": "Cama", "price": 150000, "stock": 5, "category": "Hogar" },
     { "id": 2, "name": "Silla", "price": 10000, "stock": 15, "category": "Oficina" },
-    { "id": 3, "name": "Mesa", "price": 50000, "stock": 6, "category": "Hogar" }
+    { "id": 3, "name": "Mesa", "price": 50000, "stock": 6, "category": "Hogar" },
+    { "id": 4, "name": "Escritorio", "price": 85000, "stock": 8, "category": "Oficina" },
+    { "id": 5, "name": "Sofá", "price": 220000, "stock": 3, "category": "Hogar" },
+    { "id": 6, "name": "Lámpara", "price": 18000, "stock": 22, "category": "Hogar" },
+    { "id": 7, "name": "Estante", "price": 45000, "stock": 10, "category": "Oficina" },
+    { "id": 8, "name": "Velador", "price": 28000, "stock": 12, "category": "Hogar" },
+    { "id": 9, "name": "Monitor", "price": 130000, "stock": 9, "category": "Tecnología" },
+    { "id": 10, "name": "Teclado", "price": 25000, "stock": 30, "category": "Tecnología" },
+    { "id": 11, "name": "Mouse", "price": 12000, "stock": 40, "category": "Tecnología" },
+    { "id": 12, "name": "Notebook", "price": 480000, "stock": 4, "category": "Tecnología" },
+    { "id": 13, "name": "Impresora", "price": 95000, "stock": 7, "category": "Oficina" },
+    { "id": 14, "name": "Cuaderno", "price": 2500, "stock": 120, "category": "Papelería" },
+    { "id": 15, "name": "Lápiz", "price": 500, "stock": 300, "category": "Papelería" },
+    { "id": 16, "name": "Mochila", "price": 32000, "stock": 18, "category": "Accesorios" },
+    { "id": 17, "name": "Reloj", "price": 60000, "stock": 11, "category": "Accesorios" },
+    { "id": 18, "name": "Audífonos", "price": 35000, "stock": 25, "category": "Tecnología" },
+    { "id": 19, "name": "Cortina", "price": 22000, "stock": 14, "category": "Hogar" },
+    { "id": 20, "name": "Alfombra", "price": 40000, "stock": 9, "category": "Hogar" },
+    { "id": 21, "name": "Archivador", "price": 38000, "stock": 13, "category": "Oficina" },
+    { "id": 22, "name": "Pizarra", "price": 27000, "stock": 6, "category": "Oficina" },
+    { "id": 23, "name": "Cargador", "price": 9000, "stock": 50, "category": "Tecnología" },
+    { "id": 24, "name": "Billetera", "price": 15000, "stock": 20, "category": "Accesorios" },
+    { "id": 25, "name": "Espejo", "price": 30000, "stock": 8, "category": "Hogar" }
   ]
 }
