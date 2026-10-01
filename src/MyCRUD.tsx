@@ -92,10 +92,10 @@ export const MyCRUD = () => {
         {
           data && (
             <ProductsTable
-              products={data.items}
-              onEdit={openEditModal}
-              onDelete={handleDelete}
-              pendingDeleteId={deleteProduct.isPending ? (deleteProduct.variables ?? null) : null}
+              products        = {data.items}
+              onEdit          = {openEditModal}
+              onDelete        = {handleDelete}
+              pendingDeleteId = {deleteProduct.isPending ? (deleteProduct.variables ?? null) : null}
             
             />
           )

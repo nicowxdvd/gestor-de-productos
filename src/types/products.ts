@@ -10,7 +10,7 @@ export const productSchema = z.object({
 
 export const productInputSchema = productSchema.omit({ id: true })
 
-export type Product = z.infer<typeof productSchema>
+export type Product      = z.infer<typeof productSchema>
 export type ProductInput = z.infer<typeof productInputSchema>
 
 export type ProductsPage = {
