@@ -62,10 +62,10 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending}: Produc
     function handleSubmit(event: React.FormEvent){
         event.preventDefault()
         const result = productInputSchema.safeParse({
-            name: form.name,
-            price: parseEsArNumber(form.price),
-            stock: Number(form.stock),
-            category: form.category,
+            name     : form.name,
+            price    : parseEsArNumber(form.price),
+            stock    : Number(form.stock),
+            category : form.category,
         })
 
         if(!result.success){
@@ -90,9 +90,9 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending}: Produc
                 <div className="mb-3">
                     <label className="mb-1 block text-sm text-slate-300">Nombre</label>
                     <input
-                        value={form.name}
-                        onChange={(e) => handleChange('name', e.target.value)}
-                        className="w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
+                        value     = {form.name}
+                        onChange  = {(e) => handleChange('name', e.target.value)}
+                        className = "w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
                     />
                     { errors.name && <p className="mt-1 text-xs text-red-400">{errors.name}</p>}
                 </div>
@@ -100,47 +100,47 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending}: Produc
                 <div className="mb-3">
                     <label className="mb-1 block text-sm text-slate-300">Precio</label>
                     <input
-                        value={form.price}
-                        onChange={(e) => handleChange('price', e.target.value)}
-                        className="w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
+                        value     = {form.price}
+                        onChange  = {(e) => handleChange('price', e.target.value)}
+                        className = "w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
                     />
                     {errors.price && <p className="mt-1 text-xs text-red-400">{errors.price}</p>}
                     </div>
 
-                    <div className="mb-3">
-                    <label className="mb-1 block text-sm text-slate-300">Stock</label>
+                    <div className   = "mb-3">
+                    <label className = "mb-1 block text-sm text-slate-300">Stock</label>
                     <input
                         value={form.stock}
-                        onChange={(e) => handleChange('stock', e.target.value)}
-                        className="w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
+                        onChange  = {(e) => handleChange('stock', e.target.value)}
+                        className = "w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
                     />
                     {errors.stock && <p className="mt-1 text-xs text-red-400">{errors.stock}</p>}
                     </div>
 
-                    <div className="mb-4">
-                    <label className="mb-1 block text-sm text-slate-300">Categoría</label>
+                    <div className   = "mb-4">
+                    <label className = "mb-1 block text-sm text-slate-300">Categoría</label>
                     <input
-                        value={form.category}
-                        onChange={(e) => handleChange('category', e.target.value)}
-                        className="w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
+                        value     = {form.category}
+                        onChange  = {(e) => handleChange('category', e.target.value)}
+                        className = "w-full rounded border border-slate-700 bg-slate-800 p-2 text-sm"
                     />
                     {errors.category && <p className="mt-1 text-xs text-red-400">{errors.category}</p>}
                 </div>
 
-                        <div className="flex justify-end gap-2">
-                <button
-                    type="button"
-                    onClick={onClose}
-                    disabled={isPending}
-                    className="rounded bg-slate-700 px-4 py-2 text-sm hover:bg-slate-600 disabled:opacity-50">
-                    Cancelar
-                </button>
-                <button
-                    type="submit"
-                    disabled={isPending}
-                    className="rounded bg-purple-600 px-4 py-2 text-sm hover:bg-purple-500 disabled:opacity-50">
-                    {isPending ? 'Guardando...' : 'Guardar'}
-                </button>
+                <div className="flex justify-end gap-2">
+                    <button
+                        type      = "button"
+                        onClick   = {onClose}
+                        disabled  = {isPending}
+                        className = "rounded bg-slate-700 px-4 py-2 text-sm hover:bg-slate-600 disabled:opacity-50">
+                        Cancelar
+                    </button>
+                    <button
+                        type      = "submit"
+                        disabled  = {isPending}
+                        className = "rounded bg-purple-600 px-4 py-2 text-sm hover:bg-purple-500 disabled:opacity-50">
+                        {isPending ? 'Guardando...' : 'Guardar'}
+                    </button>
                 </div>
             </form>
 
