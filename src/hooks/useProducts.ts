@@ -6,8 +6,8 @@ const PRODUCT_KEY = ['products'];
 
 export function useProductsQuery(page: number){
     return useQuery({
-        queryKey: [...PRODUCT_KEY, page],
-        queryFn: () => fetchProducts(page),
+        queryKey : [...PRODUCT_KEY, page],
+        queryFn  : () => fetchProducts(page),
         placeholderData: keepPreviousData
     })
 }

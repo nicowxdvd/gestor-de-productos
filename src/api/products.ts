@@ -1,7 +1,6 @@
 import { productSchema, type Product,  type ProductInput, type ProductsPage } from "../types/products"
 
-const BASE_URL = 'https://my-json-server.typicode.com/nicowxdvd/gProducts/products'
-
+const BASE_URL         = 'https://my-json-server.typicode.com/nicowxdvd/gProducts/products'
 export const PAGE_SIZE = 10
 
 
@@ -24,7 +23,7 @@ export async function fetchProducts(page: number): Promise<ProductsPage>{
 
 export async function createProduct( input:ProductInput ): Promise<Product> {
     const res = await fetch(BASE_URL,{
-        method  :'POST',
+        method  : 'POST',
         headers : { 'Content-Type': 'application/json' },
         body    : JSON.stringify(input)
     })
