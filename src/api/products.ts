@@ -1,15 +1,22 @@
-import { productSchema, type Product,  type ProductInput } from "../types/products"
+import { productSchema, type Product,  type ProductInput, type ProductsPage } from "../types/products"
 
 const BASE_URL = 'https://my-json-server.typicode.com/nicowxdvd/gProducts/products'
 
+export const PAGE_SIZE = 10
 
-export async function fetchProducts(): Promise<Product[]>{
-    const res = await fetch(BASE_URL)
+
+export async function fetchProducts(page: number): Promise<ProductsPage>{
+    const res = await fetch(`${BASE_URL}?_page=${page}&_limit=${PAGE_SIZE}`)
     if(!res.ok)
         throw new Error('No se pudo obtener los productos')
 
+    const totalHeader = res.headers.get('X-Total-Count')
+    const total = totalHeader === null || totalHeader.trim() === '' ? NaN : Number(totalHeader)
+    if(!Number.isFinite(total))
+        throw new Error('Falta el header X-Total-Count en la respuesta')
+
     const data = await res.json()
-    return productSchema.array().parse(data)
+    return { items: productSchema.array().parse(data), total }
 
 }
 
