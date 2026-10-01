@@ -1,13 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchProducts, createProduct, updateProduct, deleteProduct } from "../api/products";
 import type { ProductInput } from "../types/products";
 
 const PRODUCT_KEY = ['products'];
 
-export function useProductsQuery(){
+export function useProductsQuery(page: number){
     return useQuery({
-        queryKey: PRODUCT_KEY,
-        queryFn: fetchProducts
+        queryKey: [...PRODUCT_KEY, page],
+        queryFn: () => fetchProducts(page),
+        placeholderData: keepPreviousData
     })
 }
 
