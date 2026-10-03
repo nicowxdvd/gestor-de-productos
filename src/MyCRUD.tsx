@@ -4,6 +4,8 @@ import { PAGE_SIZE } from "./api/products"
 import type { Product, ProductInput } from "./types/products"
 import { ProductsTable } from "./components/ProductsTable"
 import { ProductFormModal } from "./components/ProductFormModal"
+import { ErrorState } from "./components/ErrorState"
+import { getErrorMessage } from "./api/errors"
 
 
 
@@ -11,7 +13,7 @@ export const MyCRUD = () => {
 
   const [page, setPage] = useState(1)
 
-  const { data, isLoading, isError, isPlaceholderData } = useProductsQuery(page)
+  const { data, error, isLoading, isError, isFetching, isPlaceholderData, refetch } = useProductsQuery(page)
   const totalPages    = Math.max(1, Math.ceil((data?.total ?? 0) / PAGE_SIZE))
   const createProduct = useCreateProductsMutation()
   const updateProduct = useUpdateProductMutation()
@@ -19,11 +21,20 @@ export const MyCRUD = () => {
 
   const [modalOpen, setModalOpen ]          = useState(false)
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
-  const [actionError, setActionError]       = useState<string | null>(null)
+  const [submitError, setSubmitError]       = useState<string | null>(null)
+  const [deleteError, setDeleteError]       = useState<string | null>(null)
+
+
+
+  function changePage(next: number) {
+    setDeleteError(null)
+    setPage(next)
+  }
 
 
 
   function openCreateModal(){
+    setSubmitError(null)
     setEditingProduct(null)
     setModalOpen(true)
   }
@@ -31,6 +42,7 @@ export const MyCRUD = () => {
 
 
   function openEditModal(product: Product) {
+    setSubmitError(null)
     setEditingProduct(product)
     setModalOpen(true)
   }
@@ -38,6 +50,7 @@ export const MyCRUD = () => {
 
 
   function closeModal() {
+    setSubmitError(null)
     setModalOpen(false)
     setEditingProduct(null)
   }
@@ -46,12 +59,11 @@ export const MyCRUD = () => {
 
   function handleSubmit(input: ProductInput){
     const onSuccess = () =>{
-      setActionError(null)
       closeModal()
     }
 
-    const onError = () =>{
-      setActionError('No se pudo guardar el producto. Intentá de nuevo.')
+    const onError = (err: Error) =>{
+      setSubmitError(getErrorMessage(err, 'No se pudo guardar el producto. Intentá de nuevo.'))
     }
 
     if (editingProduct) {
@@ -67,11 +79,11 @@ export const MyCRUD = () => {
   function handleDelete(id:number){
     deleteProduct.mutate(id,{
       onSuccess: () => {
-        setActionError(null)
-        if (page > 1 && data?.items.length === 1) 
+        setDeleteError(null)
+        if (page > 1 && data?.items.length === 1)
           setPage(page - 1)
       },
-      onError: () => setActionError('No se pudo eliminar el producto. Intentá de nuevo.'),
+      onError: (err) => setDeleteError(getErrorMessage(err, 'No se pudo eliminar el producto. Intentá de nuevo.')),
     })
   }
 
@@ -86,8 +98,26 @@ export const MyCRUD = () => {
         </div>
         
         {isLoading && <p className="text-slate-400">Cargando productos...</p>}
-        {isError && <p className="text-red-400">Error al cargar productos.</p>}
-        {actionError && <p className="mb-4 text-red-400">{actionError}</p>}
+        {isError && !data && (
+          <ErrorState
+            title      = "No se pudieron cargar los productos"
+            message    = {getErrorMessage(error, 'Error desconocido')}
+            onRetry    = {() => refetch()}
+            isRetrying = {isFetching}
+          />
+        )}
+        {isError && data && (
+          <div className="mb-4 flex items-center justify-between rounded border border-yellow-500/50 bg-yellow-950/30 p-3 text-sm text-yellow-300">
+            <span>Mostrando datos anteriores: {getErrorMessage(error, 'Error desconocido')}</span>
+            <button type="button" onClick={() => refetch()} disabled={isFetching} className="rounded bg-slate-700 px-3 py-1 hover:bg-slate-600 disabled:opacity-50">Reintentar</button>
+          </div>
+        )}
+        {deleteError && (
+          <div className="mb-4 flex items-center justify-between rounded border border-red-500/50 bg-red-950/30 p-3 text-sm text-red-400">
+            <span>{deleteError}</span>
+            <button type="button" onClick={() => setDeleteError(null)} aria-label="Cerrar">×</button>
+          </div>
+        )}
 
         {
           data && (
@@ -102,19 +132,19 @@ export const MyCRUD = () => {
         }
 
         {
-          data && (
+          (data || isError) && (
             <div className="mt-4 flex items-center justify-end gap-3 text-sm">
               <button
                 type      = "button"
-                onClick   = {() => setPage(page - 1)}
+                onClick   = {() => changePage(page - 1)}
                 disabled  = {page === 1 || isPlaceholderData}
                 className = "rounded bg-slate-700 px-4 py-2 hover:bg-slate-600 disabled:opacity-50">
                 Anterior
               </button>
-              <span className="text-slate-300">Página {page} de {totalPages}</span>
+              <span className="text-slate-300">Página {page}{data && ` de ${totalPages}`}</span>
               <button
                 type      = "button"
-                onClick   = {() => setPage(page + 1)}
+                onClick   = {() => changePage(page + 1)}
                 disabled  = {page >= totalPages || isPlaceholderData}
                 className = "rounded bg-slate-700 px-4 py-2 hover:bg-slate-600 disabled:opacity-50">
                 Siguiente
@@ -134,6 +164,7 @@ export const MyCRUD = () => {
           onClose   ={closeModal}
           onSubmit  ={handleSubmit}
           isPending ={createProduct.isPending || updateProduct.isPending}
+          submitError={submitError}
         />
       )}
 
