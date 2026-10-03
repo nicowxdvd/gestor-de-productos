@@ -7,6 +7,7 @@ interface ProductFormModalProps {
     onClose     : () => void
     onSubmit    : (input: ProductInput) => void
     isPending   : boolean
+    submitError : string | null
 
 }
 
@@ -31,7 +32,10 @@ const emptyForm: FormState = {
 
 
 function parseEsArNumber(value: string): number{
-     return Number(value.trim().replace(/\./g, '').replace(',', '.'))
+    if(value.trim() === '')
+        return NaN
+
+    return Number(value.trim().replace(/\./g, '').replace(',', '.'))
 }
 
 
@@ -50,7 +54,7 @@ function toFormState(product: Product | null) : FormState{
 
 
 
-export const ProductFormModal = ({product, onClose, onSubmit, isPending}: ProductFormModalProps) => {
+export const ProductFormModal = ({product, onClose, onSubmit, isPending, submitError}: ProductFormModalProps) => {
     const [form, setForm]     = useState<FormState>(()=> toFormState(product))
     const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
 
@@ -63,7 +67,7 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending}: Produc
         const result = productInputSchema.safeParse({
             name     : form.name,
             price    : parseEsArNumber(form.price),
-            stock    : Number(form.stock),
+            stock    : parseEsArNumber(form.stock),
             category : form.category,
         })
 
@@ -125,6 +129,8 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending}: Produc
                     />
                     {errors.category && <p className="mt-1 text-xs text-red-400">{errors.category}</p>}
                 </div>
+
+                {submitError && <p className="mb-3 text-sm text-red-400">{submitError}</p>}
 
                 <div className="flex justify-end gap-2">
                     <button
