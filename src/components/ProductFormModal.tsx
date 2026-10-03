@@ -32,7 +32,10 @@ const emptyForm: FormState = {
 
 
 function parseEsArNumber(value: string): number{
-     return Number(value.trim().replace(/\./g, '').replace(',', '.'))
+    if(value.trim() === '')
+        return NaN
+
+    return Number(value.trim().replace(/\./g, '').replace(',', '.'))
 }
 
 
@@ -64,7 +67,7 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending, submitE
         const result = productInputSchema.safeParse({
             name     : form.name,
             price    : parseEsArNumber(form.price),
-            stock    : Number(form.stock),
+            stock    : parseEsArNumber(form.stock),
             category : form.category,
         })
 
