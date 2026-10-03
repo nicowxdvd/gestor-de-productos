@@ -12,7 +12,7 @@ export const MyCRUD = () => {
   const [page, setPage] = useState(1)
 
   const { data, isLoading, isError, isPlaceholderData } = useProductsQuery(page)
-  const totalPages = Math.max(1, Math.ceil((data?.total ?? 0) / PAGE_SIZE))
+  const totalPages    = Math.max(1, Math.ceil((data?.total ?? 0) / PAGE_SIZE))
   const createProduct = useCreateProductsMutation()
   const updateProduct = useUpdateProductMutation()
   const deleteProduct = useDeleteProductMutation()
@@ -68,7 +68,8 @@ export const MyCRUD = () => {
     deleteProduct.mutate(id,{
       onSuccess: () => {
         setActionError(null)
-        if (page > 1 && data?.items.length === 1) setPage(page - 1)
+        if (page > 1 && data?.items.length === 1) 
+          setPage(page - 1)
       },
       onError: () => setActionError('No se pudo eliminar el producto. Intentá de nuevo.'),
     })
@@ -91,10 +92,10 @@ export const MyCRUD = () => {
         {
           data && (
             <ProductsTable
-              products={data.items}
-              onEdit={openEditModal}
-              onDelete={handleDelete}
-              pendingDeleteId={deleteProduct.isPending ? (deleteProduct.variables ?? null) : null}
+              products        = {data.items}
+              onEdit          = {openEditModal}
+              onDelete        = {handleDelete}
+              pendingDeleteId = {deleteProduct.isPending ? (deleteProduct.variables ?? null) : null}
             
             />
           )

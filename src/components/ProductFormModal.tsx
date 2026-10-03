@@ -22,10 +22,10 @@ interface FormState{
 
 
 const emptyForm: FormState = {
-    name        :'', 
-    price       :'', 
-    stock       :'', 
-    category    :''
+    name        : '', 
+    price       : '', 
+    stock       : '', 
+    category    : ''
 }
 
 
@@ -57,7 +57,6 @@ export const ProductFormModal = ({product, onClose, onSubmit, isPending}: Produc
     function handleChange(field: keyof FormState, value:string){
         setForm( (prev) => ({...prev, [field]:value}))
     }
-
 
     function handleSubmit(event: React.FormEvent){
         event.preventDefault()
