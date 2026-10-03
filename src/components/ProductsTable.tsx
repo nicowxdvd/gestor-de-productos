@@ -5,10 +5,10 @@ import type { Product } from "../types/products"
 
 
 interface ProductsTableProps{
-  products: Product[]
-  onEdit: (Product: Product) => void
-  onDelete:(id: number) => void
-  pendingDeleteId: number | null
+  products        : Product[]
+  onEdit          : (Product: Product) => void
+  onDelete        : (id: number) => void
+  pendingDeleteId : number | null
 }
 
 
